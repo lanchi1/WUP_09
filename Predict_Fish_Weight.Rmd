@@ -147,18 +147,20 @@ summary.lm(Perchmodel)
 ```
 
 
-The best model based on this graph is the Perch model
-
-
-
+The best model based on this graph is the Perch model. The two element model in Perch in the best, the two regression model, Height and Width.
 
 
 ### Best Models
 
+The best models are the two element models of Height and Width.
+
 ### Best Two regressor model
 
+The best two regressor models are also Height and Width
 
 ## Pike
+
+
 
 ### Best Models
 
