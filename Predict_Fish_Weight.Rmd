@@ -160,16 +160,84 @@ The best two regressor models are also Height and Width
 
 ## Pike
 
+```{r}
+library(leaps)
 
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Pike,
+
+               nbest = 1,       # 1 best model for each number of predictors
+
+               nvmax = NULL,    # NULL for no limit on number of variables
+
+               force.in = NULL, force.out = NULL,
+
+               method = "exhaustive")
+
+ 
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+
+library(car)
+
+subsets(regsubsets.out,statistic="adjr2",legend="topright",main="Adjusted R^2")
+
+
+```
 
 ### Best Models
 
+The best model is a five element answer. The Adjusted R squared shows us that all five componensts, length 1,2,3 Height, and Width are placed in the top right of the model above. 
+
 ### Best Two regressor model
+
+Based on the leaps data, Length 1 and Length3 are the best two regressor model.
 
 ## Roach
 
+```{r}
+library(leaps)
+
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Roach,
+
+               nbest = 1,       # 1 best model for each number of predictors
+
+               nvmax = NULL,    # NULL for no limit on number of variables
+
+               force.in = NULL, force.out = NULL,
+
+               method = "exhaustive")
+
+ 
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+
+library(car)
+
+subsets(regsubsets.out,statistic="adjr2",legend="topright",main="Adjusted R^2")
+
+
+```
+
 ### Best Models
+
+The best overall model for the Roach model is similar to the Perch results. This graph shows that length 1, 3 and Width have the best Adjusted R squared data.
 
 ### Best Two regressor model
 
+The two best regressor models are the Length 3 and Width models as well.
+
 ## Final Summary Statements
+
+
