@@ -18,38 +18,140 @@ require(tigerstats)
 require(tidyverse)
 require(car)
 require(leaps)
+Fish <- read.csv(file="Fish.csv")
 ```
+
+
+
+
+
+
+
 
 # Predicting Fish Weight
+
 ```{r}
-fish <- read.csv(file = "Fish.csv")
+Fish <- Fish %>%
+
+mutate(across(where(is.character), as.factor))
+
+levels(Fish$Species)
 ```
 
-```{r eval=TRUE}
- 
-fish <- fish %>%
-mutate(across(where(is.character), as.factor))
-levels(fish$Species)
-Bream <- filter(fish, Species == "Bream")
+
+
+```{r}
+Bream <- filter(Fish, Species == "Bream")
+
 Bream <- select(Bream, -Species) 
-Parkki <- filter(fish, Species == "Parkki")
+
+Parkki <- filter(Fish, Species == "Parkki")
+
 Parkki <- select(Parkki, -Species) 
-Perch <- filter(fish, Species == "Perch")
+
+Perch <- filter(Fish, Species == "Perch")
+
 Perch <- select(Perch, -Species) 
-Pike <- filter(fish, Species == "Pike")
-Pike <- select(Pike, -Species) 
-Roach <- filter(fish, Species == "Roach")
+
+Pike <- filter(Fish, Species == "Pike")
+
+Pike <- select(Pike, -Species)
+
+Roach <- filter(Fish, Species == "Roach")
+
 Roach <- select(Roach, -Species) 
-Smelt <- filter(fish, Species == "Smelt")
+
+Smelt <- filter(Fish, Species == "Smelt")
+
 Smelt <- select(Smelt, -Species) 
-Whitefish <- filter(fish, Species == "Whitefish")
+
+Whitefish <- filter(Fish, Species == "Whitefish")
+
 Whitefish <- select(Whitefish, -Species) 
 ```
 
-# For each of the three species of fish listed below, determine the best regression model and also the best 2 element regression model. Use the BestSubset Regression helper file.
-
 
 ## Perch
+
+```{r}
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Perch,
+
+               nbest = 
+
+1,       
+
+# 1 best model for each number of predictors
+
+               nvmax = 
+
+NULL,    
+
+# NULL for no limit on number of variables
+
+               force.in = 
+
+NULL, force.out = 
+
+NULL,
+
+               method = 
+
+"exhaustive")
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+
+
+```
+
+```{r}
+library(leaps)
+
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Perch,
+
+               nbest = 1,       # 1 best model for each number of predictors
+
+               nvmax = NULL,    # NULL for no limit on number of variables
+
+               force.in = NULL, force.out = NULL,
+
+               method = "exhaustive")
+
+ 
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+
+library(car)
+
+subsets(regsubsets.out,statistic="adjr2",legend="topright",main="Adjusted R^2")
+
+
+```
+
+Perch model 
+
+```{r}
+Perchmodel <- lm(Weight ~Height+Width, data=Perch)
+summary.lm(Perchmodel)
+```
+
+
+The best model based on this graph is the Perch model
+
+
+
+
 
 ### Best Models
 
